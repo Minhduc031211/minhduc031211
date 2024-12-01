@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffefd5;
+            color: #aa0c0c;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-top: 50px;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 20px;
+        }
+
+        .cake-emoji {
+            font-size: 10rem;
+            margin-top: 30px;
+        }
+
+        .cake-image {
+            margin-top: 30px;
+        }
+
+        .options {
+            margin-top: 40px;
+        }
+
+        .button {
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #ac1919;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #14ff53;
+        }
+
+        .button:disabled {
+            background-color: #8e0f0f;
+            cursor: not-allowed;
+        }
+
+        .reset-button {
+            margin-top: 20px;
+            background-color: #14ff53;
+        }
+
+        .password-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .password-input {
+            padding: 10px;
+            font-size: 1.2rem;
+            margin: 10px;
+        }
+    </style>
+    <script>
+        // Kiểm tra xem người dùng đã chọn chưa từ localStorage
+        window.onload = function () {
+            if (localStorage.getItem('choiceMade') === 'true') {
+                disableButtons();
+            }
+        }
+
+        function showMessage(message, buttonId1, buttonId2, buttonId3, buttonId4, redirectUrl) {
+            // Hiển thị thông báo
+            alert(message);
+
+            // Vô hiệu hóa các nút sau khi chọn
+            document.getElementById(buttonId1).disabled = true;
+            document.getElementById(buttonId2).disabled = true;
+            document.getElementById(buttonId3).disabled = true;
+            document.getElementById(buttonId4).disabled = true;
+
+            // Lưu trạng thái đã chọn vào localStorage
+            localStorage.setItem('choiceMade', 'true');
+
+            // Chuyển hướng trang nếu có URL
+            if (redirectUrl) {
+                window.location.href = redirectUrl;
+            }
+        }
+
+        // Vô hiệu hóa tất cả các nút nếu đã chọn
+        function disableButtons() {
+            document.getElementById('btn1').disabled = true;
+            document.getElementById('btn2').disabled = true;
+            document.getElementById('btn3').disabled = true;
+            document.getElementById('btn4').disabled = true;
+        }
+
+        // Hiển thị yêu cầu mật khẩu khi nhấn reset
+        function showPasswordPrompt() {
+            document.getElementById('password-container').style.display = 'block';
+        }
+
+        // Kiểm tra mật khẩu và reset lại nếu đúng
+        function resetChoices() {
+            var enteredPassword = document.getElementById('password').value;
+            var correctPassword = "10082005"; // Mật khẩu đúng (có thể thay đổi theo nhu cầu)
+
+            if (enteredPassword === correctPassword) {
+                localStorage.removeItem('choiceMade');  // Xóa mục trong localStorage
+                location.reload();  // Tải lại trang để làm mới trạng thái
+            } else {
+                alert("Mật khẩu không đúng. Vui lòng thử lại!");
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1> Chúc mừng năm mới 2025! </h1>
+    <p>HAPPY NEW YEAR , CUNG HỈ PHÁT TÀI!</p>
+    <img class="cake-image"
+        src="https://cdn.congthuong.vn/stores/news_dataimages/2023/122023/03/17/phao-hoa20231203173830.png?rt=20231203173830"
+        alt="Birthday Cake" width="300">
+    <div class="options">
+        <p>Hãy chọn một trong bốn:</p>
+        <button class="button" id="btn1"
+            onclick="showMessage('Lì xì bằng số chuỗi', 'btn1', 'btn2', 'btn3', 'btn4', 'https://lixi.momo.vn/lixi/EyqVGe8nx2zPM0p')">Xoan
+            với Oanh thì bấm vào đây</button>
+        <button class="button" id="btn2" onclick="showMessage('Chúc mừng năm mới', 'btn1', 'btn2', 'btn3', 'btn4')">Lựa
+            chọn 2</button>
+        <button class="button" id="btn3"
+            onclick="showMessage('Lì xì bằng 2 số cuối năm!', 'btn1', 'btn2', 'btn3', 'btn4')">Lựa chọn 3</button>
+        <button class="button" id="btn4" onclick="showMessage('Lì xì bằng số tuổi', 'btn1', 'btn2', 'btn3', 'btn4')">Lựa
+            chọn 4</button>
+    </div>
+
+    <!-- Nút reset để yêu cầu mật khẩu trước khi cho phép chọn lại -->
+    <button class="button reset-button" onclick="showPasswordPrompt()">Reset để chọn lại</button>
+
+    <!-- Container yêu cầu mật khẩu -->
+    <div id="password-container" class="password-container">
+        <label for="password" style="font-size: 1.2rem;">Nhập mật khẩu để reset:</label>
+        <input type="password" id="password" class="password-input">
+        <button class="button" onclick="resetChoices()">Xác nhận</button>
+    </div>
+</body>
+
+</html>
